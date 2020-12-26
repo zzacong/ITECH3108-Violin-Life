@@ -28,7 +28,7 @@ CREATE TABLE `user` (
 
 CREATE TABLE `violin` (
   `id`            SERIAL,
-  `user_id`       BIGINT UNSIGNED,
+  `user_id`       BIGINT UNSIGNED NOT NULL,
   `title`         VARCHAR(255) NOT NULL,
   `description`   VARCHAR(255),
   `seeking`       VARCHAR(255),
@@ -39,8 +39,8 @@ CREATE TABLE `violin` (
 
 CREATE TABLE `offer` (
   `id`            SERIAL,
-  `user_id`       BIGINT UNSIGNED,
-  `violin_id`     BIGINT UNSIGNED,
+  `user_id`       BIGINT UNSIGNED NOT NULL,
+  `violin_id`     BIGINT UNSIGNED NOT NULL,
   `offer`         VARCHAR(255) NOT NULL,
   `accepted`      TIMESTAMP,
   `submitted`     TIMESTAMP DEFAULT NOW(),
@@ -51,9 +51,9 @@ CREATE TABLE `offer` (
 
 CREATE TABLE `message` (
   `id`              SERIAL,
-  `from_user_id`    BIGINT UNSIGNED,
-  `to_user_id`      BIGINT UNSIGNED,
-  `offer_id`        BIGINT UNSIGNED,
+  `from_user_id`    BIGINT UNSIGNED NOT NULL,
+  `to_user_id`      BIGINT UNSIGNED NOT NULL,
+  `offer_id`        BIGINT UNSIGNED NOT NULL,
   `sent`            TIMESTAMP DEFAULT NOW(),
   `text`            VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
