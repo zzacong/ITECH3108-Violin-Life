@@ -1,8 +1,6 @@
 <?php
-$conn = mysqli_connect('localhost', 'admin', 'password', 'itech3108_30360914_a1');
+$db = mysqli_connect('localhost', 'admin', 'password', 'itech3108_30360914_a1');
 
-if (!$conn) {
+if (!$db) {
   echo 'Connection error: ' . mysqli_connect_error();
 }
-
-?>

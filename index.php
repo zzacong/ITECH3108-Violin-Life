@@ -7,7 +7,9 @@
 
 <body>
   <?php require('./templates/navbar.php') ?>
-  <h1>Violin Life</h1>
+  <div class="container">
+    <h1>Violin Life</h1>
+  </div>
 </body>
 
 </html>
