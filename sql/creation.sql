@@ -42,7 +42,7 @@ CREATE TABLE `offer` (
   `user_id` BIGINT UNSIGNED NOT NULL,
   `violin_id` BIGINT UNSIGNED NOT NULL,
   `offer` VARCHAR(255) NOT NULL,
-  `accepted` TIMESTAMP,
+  `accepted` TIMESTAMP NULL DEFAULT NULL,
   `submitted` TIMESTAMP DEFAULT NOW(),
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),

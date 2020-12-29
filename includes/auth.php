@@ -9,16 +9,16 @@ function logout() {
   unset($_SESSION['username']);
 }
 
-function is_logged_in() {
+function authenticated() {
   return isset($_SESSION['username']);
 }
 
-function logged_in_user() {
+function current_user() {
   return $_SESSION['username'];
 }
 
-function require_login() {
-  if (!is_logged_in()) {
+function auth_redirect() {
+  if (!authenticated()) {
     header('Location: login.php');
     exit();
   }

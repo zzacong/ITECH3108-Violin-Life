@@ -4,33 +4,31 @@ session_start();
 require_once('includes/config.php');
 require_once('includes/db_connect.php');
 require_once('includes/auth.php');
+require_once('includes/utils.php');
 
-$usernameOrEmail = $password = '';
-$errors = ['usernameOrEmail' => '', 'password' => ''];
+$username_or_email = $password = '';
+$errors = ['username_or_email' => '', 'password' => ''];
 
 if (isset($_POST['submit'])) {
+  $username_or_email = $_POST['username_or_email'] ?? '';
+  $password = $_POST['password'] ?? '';
+
   // * Validate username or email
-  if (!empty($_POST['usernameOrEmail'])) {
-    $usernameOrEmail = $_POST['usernameOrEmail'];
-
-    $method = filter_var($usernameOrEmail, FILTER_VALIDATE_EMAIL) ? "email" : "username";
-    $query = "SELECT username, password FROM `user` WHERE $method = :usernameOrEmail";
-
+  if ($username_or_email) {
+    $method = filter_var($username_or_email, FILTER_VALIDATE_EMAIL) ? "email" : "username";
+    $query = "SELECT username, password FROM `user` WHERE $method = :username_or_email";
     $stmt = $db->prepare($query);
-    $stmt->bindValue(':usernameOrEmail', $usernameOrEmail);
-    $stmt->execute();
+    $stmt->execute([':username_or_email' => $username_or_email]);
 
     if (!$user = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $errors['usernameOrEmail'] = "This username or email does not exist.";
+      $errors['username_or_email'] = "This username or email does not exist.";
     }
   } else {
-    $errors['usernameOrEmail'] = "Please enter your username or email to log in.";
+    $errors['username_or_email'] = "Please enter your username or email to log in.";
   }
 
   // * Validate password
-  if (!empty($_POST['password'])) {
-    $password = $_POST['password'];
-  } else {
+  if (!$password) {
     $errors['password'] = "Please enter your password to log in.";
   }
 
@@ -63,15 +61,16 @@ if (isset($_POST['submit'])) {
 
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 
-      <label for="inputUsernameOrEmail" class="form-label">Username or Email: </label>
-      <input type="text" name="usernameOrEmail" id="inputUsernameOrEmail" placeholder="username or email" value="<?php echo htmlspecialchars($usernameOrEmail); ?>" class="form-control" required>
-      <p class="text-danger"><?php echo $errors['usernameOrEmail'] ?></p>
+      <label for="input_username_or_email" class="form-label">Username or Email: </label>
+      <input type="text" name="username_or_email" id="input_username_or_email" placeholder="username or email" value="<?php echo html($username_or_email); ?>" class="form-control">
+      <p class="text-danger"><?php echo $errors['username_or_email'] ?></p>
 
-      <label for="inputPassword" class="form-label">Password: </label>
-      <input type="password" name="password" id="inputPassword" placeholder="password" value="<?php echo htmlspecialchars($password); ?>" class="form-control" required>
+      <label for="input_password" class="form-label">Password: </label>
+      <input type="password" name="password" id="input_password" placeholder="password" value="<?php echo html($password); ?>" class="form-control">
       <p class="text-danger"><?php echo $errors['password'] ?></p>
 
       <input type="submit" name="submit" value="Log In" class="btn btn-primary my-4 px-4">
+      <span class="mx-2">Not a user? <a href="signup.php">Sign up here.</a></span>
 
     </form>
   </main>
