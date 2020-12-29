@@ -1,0 +1,5 @@
+Zhi Zao Ong, 30360914, zhizaoong@students.federation.edu.au, password
+The Tutor, tutor, tutor@federation.edu.au, guest
+Carree Grunwald, cgrundwald, cgrundwald@gmail.com, cgrundwaldpassword
+Elsa Watting, ewatting, ewatting@gmail.com, ewattingpassword
+De Treffy, dtreffy, dtreffy@gmail.com, dtreffypassword

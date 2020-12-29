@@ -1,10 +1,14 @@
 <?php
 
+session_start();
+require_once('includes/config.php');
+require_once('includes/db_connect.php');
+require_once('includes/auth.php');
+
 $name = $username = $email = $password = $location = '';
 $errors = ['name' => '', 'username' => '', 'email' => '', 'password' => ''];
 
 if (isset($_POST['submit'])) {
-  require('./config/db_connect.php');
 
   // * Validate name
   if (!empty($_POST['name'])) {
@@ -20,8 +24,12 @@ if (isset($_POST['submit'])) {
   if (!empty($_POST['username'])) {
     $username = $_POST['username'];
     if (preg_match('/^[a-zA-Z0-9._-]+$/', $username)) {
-      $result = mysqli_query($db, "SELECT * FROM `user` WHERE username = '$username';");
-      if (mysqli_num_rows($result)) {
+      $query = "SELECT * FROM `user` WHERE username = :username";
+      $stmt = $db->prepare($query);
+      $stmt->bindValue(':username', $username);
+      $stmt->execute();
+
+      if ($stmt->fetch()) {
         $errors['username'] = "This username has been taken.";
       }
     } else {
@@ -35,8 +43,12 @@ if (isset($_POST['submit'])) {
   if (!empty($_POST['email'])) {
     $email = trim($_POST['email']);
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      $result = mysqli_query($db, "SELECT * FROM `user` WHERE email = '$email';");
-      if (mysqli_num_rows($result)) {
+      $query = "SELECT * FROM `user` WHERE email = :email";
+      $stmt = $db->prepare($query);
+      $stmt->bindValue(':email', $email);
+      $stmt->execute();
+
+      if ($stmt->fetch()) {
         $errors['email'] = "This email has been taken.";
       }
     } else {
@@ -61,25 +73,29 @@ if (isset($_POST['submit'])) {
 
   if (!array_filter($errors)) {
     // * Form is valid
-    $name = mysqli_real_escape_string($db, $name);
-    $username = mysqli_real_escape_string($db, $username);
-    $email = mysqli_real_escape_string($db, $email);
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $hashedPassword = mysqli_real_escape_string($db, $hashedPassword);
-    $location = mysqli_real_escape_string($db, $location);
 
-    $query = "INSERT INTO `user` (name, username, email, password, location) VALUES ('$name', '$username', '$email', '$hashedPassword', '$location');";
-    if (mysqli_query($db, $query)) {
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $query = "INSERT INTO `user` (
+                name, username, email, password, location
+              ) VALUES (
+                :name, :username, :email, :hashedPassword, :location
+              )";
+
+    $stmt = $db->prepare($query);
+    $stmt->bindValue(':name', $name);
+    $stmt->bindValue(':username', $username);
+    $stmt->bindValue(':email', $email);
+    $stmt->bindValue(':hashedPassword', $hashedPassword);
+    $stmt->bindValue(':location', $location);
+
+    if ($stmt->execute()) {
+      login($username);
       header('Location: index.php');
     } else {
-      echo 'query error: ' . mysqli_error($db);
+      echo 'query error: ';
+      print_r($stmt->errorInfo());
     }
-  } else {
-    echo "Form has errors";
   }
-
-  mysqli_free_result($result);
-  mysqli_close($db);
 }
 
 ?>
@@ -88,13 +104,13 @@ if (isset($_POST['submit'])) {
 <html lang="en">
 
 <head>
-  <?php require('./templates/head.php') ?>
+  <?php require('templates/head.php') ?>
 </head>
 
 <body>
-  <?php require('./templates/navbar.php') ?>
+  <?php require('templates/navbar.php') ?>
 
-  <div class="container w-75">
+  <main class="container w-75">
     <h1 class="my-3">Sign Up</h1>
 
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
@@ -121,7 +137,7 @@ if (isset($_POST['submit'])) {
       <input type="submit" name="submit" value="Register" class="btn btn-primary my-4 px-4">
 
     </form>
-  </div>
+  </main>
 
 </body>
 
