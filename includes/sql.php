@@ -91,4 +91,83 @@ $violin_details_sql = "
     id = :violin_id
 ";
 
+$get_exchanges_sql = "
+  SELECT
+    o.id AS offer_id,
+    o.offer,
+    o.accepted,
+    uof.name AS offerer_name,
+    uof.username AS offerer_username,
+    v.title AS violin_title,
+    uow.id AS owner_id,
+    uow.name AS owner_name,
+    uow.username AS owner_username
+  FROM
+    offer o
+  JOIN
+    user uof
+    ON
+      o.user_id = uof.id
+  JOIN
+    violin v
+    ON
+      o.violin_id = v.id
+  JOIN
+    user uow
+    ON
+      v.user_id = uow.id
+  WHERE
+      o.accepted IS NOT NULL
+    AND (
+        uow.username = :current_user
+      OR
+        uof.username = :current_user
+    )
+  ORDER BY
+    o.accepted ASC
+";
+
+$get_messages_sql = "
+  SELECT
+    m.offer_id,
+    m.text,
+    m.sent,
+    uf.name AS from_name,
+    uf.username AS from_username,
+    ut.name AS to_name,
+    ut.username AS to_username
+  FROM
+    message m
+  JOIN
+    user uf
+    ON
+      m.from_user_id = uf.id
+  JOIN
+    user ut
+    ON
+      m.to_user_id = ut.id
+  WHERE
+      m.offer_id = :offer_id
+  ORDER BY
+    m.sent ASC
+";
+
+$send_message_sql = "
+  INSERT INTO message (
+    from_user_id, to_user_id, offer_id, text
+  )
+  VALUES (
+    :from_user, :to_user, :offer_id, :text
+  )
+";
+
+$get_user_id_sql = "
+  SELECT 
+    id 
+  FROM 
+    `user` 
+  WHERE 
+    username = :username
+";
+
 ?>

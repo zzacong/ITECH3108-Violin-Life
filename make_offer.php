@@ -34,8 +34,7 @@ else :
     }
 
     if (!array_filter($errors)) {
-      $query = "SELECT id FROM `user` WHERE username = :username";
-      $stmt = query_execute($db, $query, [':username' => current_user()]);
+      $stmt = query_execute($db, $get_user_id_sql, [':username' => current_user()]);
       $res = $stmt->fetch();
       $user_id = $res['id'];
 

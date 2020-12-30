@@ -53,8 +53,9 @@ $violins = array();
 $titles = array();
 $counter = -1;
 $stmt = query_execute($db, $view_offers_sql);
+$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($stmt as $row) {
+foreach ($res as $row) {
   $violin_title = $row['title'];
   if (!array_key_exists($violin_title, $titles)) {
     $counter++;
