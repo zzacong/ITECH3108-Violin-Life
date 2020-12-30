@@ -2,37 +2,26 @@
 
 session_start();
 require_once('includes/auth.php');
+require_once('includes/sql.php');
 require_once('includes/config.php');
 require_once('includes/db_connect.php');
 require_once('includes/utils.php');
 
 if (authenticated()) {
   $query = "SELECT name FROM `user` WHERE username = :username";
-  $stmt = $db->prepare($query);
-  $stmt->bindValue(':username', current_user());
-  $stmt->execute();
+  $bindings = [':username' => current_user()];
+  $stmt = query_execute($db, $query, $bindings);
 
   $res = $stmt->fetch(PDO::FETCH_ASSOC);
   $name = $res['name'];
 }
 
 $query = "SELECT COUNT(*) AS no_of_violin FROM violin";
-$stmt = $db->query($query);
+$stmt = query_execute($db, $query);
 $res = $stmt->fetch(PDO::FETCH_ASSOC);
 $no_of_violin = $res['no_of_violin'];
 
-$query = "SELECT 
-            of.violin_id, vi.title, COUNT(*) AS no_of_offer 
-          FROM 
-            offer of
-          JOIN 
-            violin vi 
-          ON 
-            of.violin_id = vi.id
-          GROUP BY of.violin_id, vi.title
-          ORDER BY no_of_offer DESC";
-$stmt = $db->query($query);
-
+$stmt = query_execute($db, $top3_violins_sql);
 
 ?>
 

@@ -16,11 +16,12 @@ if (isset($_POST['submit'])) {
   // * Validate username or email
   if ($username_or_email) {
     $method = filter_var($username_or_email, FILTER_VALIDATE_EMAIL) ? "email" : "username";
-    $query = "SELECT username, password FROM `user` WHERE $method = :username_or_email";
-    $stmt = $db->prepare($query);
-    $stmt->execute([':username_or_email' => $username_or_email]);
 
-    if (!$user = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $query = "SELECT username, password FROM `user` WHERE $method = :username_or_email";
+    $bindings = [':username_or_email' => $username_or_email];
+    $stmt = query_execute($db, $query, $bindings);
+
+    if (!$user = $stmt->fetch()) {
       $errors['username_or_email'] = "This username or email does not exist.";
     }
   } else {

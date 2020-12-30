@@ -31,8 +31,8 @@ if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     if (preg_match('/^[a-zA-Z0-9._-]+$/', $username)) {
       $query = "SELECT * FROM `user` WHERE username = :username";
-      $stmt = $db->prepare($query);
-      $stmt->execute([':username' => $username]);
+      $bindings = [':username' => $username];
+      $stmt = query_execute($db, $query, $bindings);
 
       if ($stmt->fetch()) {
         $errors['username'] = "This username has been taken.";
@@ -48,8 +48,8 @@ if (isset($_POST['submit'])) {
   if ($email) {
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $query = "SELECT * FROM `user` WHERE email = :email";
-      $stmt = $db->prepare($query);
-      $stmt->execute([':email' => $email]);
+      $bindings = [':email' => $email];
+      $stmt = query_execute($db, $query, $bindings);
 
       if ($stmt->fetch()) {
         $errors['email'] = "This email has been taken.";
@@ -76,21 +76,21 @@ if (isset($_POST['submit'])) {
     // * Form is valid
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $query = $sign_up_sql;
+    $bindings = [
+      ':name' => $name,
+      ':username' => $username,
+      ':email' => $email,
+      ':hashed_password' => $hashed_password,
+      ':location' => $location
+    ];
+    $stmt = query_execute($db, $sign_up_sql, $bindings);
 
-    $stmt = $db->prepare($query);
-    $stmt->bindValue(':name', $name);
-    $stmt->bindValue(':username', $username);
-    $stmt->bindValue(':email', $email);
-    $stmt->bindValue(':hashed_password', $hashed_password);
-    $stmt->bindValue(':location', $location);
-
-    if ($stmt->execute()) {
+    if ($stmt->rowCount() > 0) {
       login($username);
       header('Location: index.php');
     } else {
-      echo 'query error: ';
       print_r($stmt->errorInfo());
+      $errors['general'] = 'Sign up failed. Please try again later.';
     }
   }
 }
