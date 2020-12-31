@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
       <p class="text-danger"><?php echo $errors['password'] ?></p>
 
       <button name="submit" class="btn btn-primary my-4 px-4">Log In</button>
-      <span class="mx-2">Not a user? <a href="signup.php">Sign up here.</a></span>
+      <p class="mx-2 d-block d-md-inline">Not a user? <a href="signup.php">Sign up here.</a></p>
 
     </form>
   </main>

@@ -67,7 +67,7 @@ if ($res = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
               <span class="badge bg-success ms-3"><?php echo $owned ? 'owned' : '' ?></span>
             </h5>
             <div class="row text-muted my-2">
-              <div class="col">
+              <div class="col-12 col-md-6">
                 <p class="mb-1 card-text">Owned by:
                   <?php echo html($exchange['owner_name'] . ' (' . $exchange['owner_username'] . ') '); ?>
                 </p>
@@ -89,10 +89,10 @@ if ($res = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
             ?>
             <?php if ($res) :; ?>
               <div class="d-flex justify-content-between mb-3">
-                <span class="border-bottom border-secondary border-3 rounded-bottom px-4">
+                <span class="border-bottom border-secondary border-3 rounded-bottom px-3 px-md-4">
                   <?php echo html($owned ? $exchange['offerer_name'] : $exchange['owner_name']); ?>
                 </span>
-                <span class="border-bottom border-primary border-3 rounded-bottom px-4">
+                <span class="border-bottom border-primary border-3 rounded-bottom px-3 px-md-4">
                   You
                 </span>
               </div>
@@ -100,7 +100,7 @@ if ($res = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
                 <?php $is_me = $msg['from_username'] === current_user(); ?>
                 <div class="row justify-content-<?php echo $is_me ? 'end' : 'start'; ?> mb-3">
                   <?php if (!$is_me) : ?>
-                    <div class="col-1 pt-2 ps-lg-4">
+                    <div class="col-2 col-sm-1 px-0 pt-2 text-center">
                       <span class="rounded-circle text-light bg-secondary text-center p-2">
                         <?php
                         if (preg_match('/([\w-]+)\s([\w-]+)/', $msg['from_name'], $matches)) {
@@ -114,11 +114,11 @@ if ($res = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
                       </span>
                     </div>
                   <?php endif; ?>
-                  <div class="col-10 col-lg-8 d-flex flex-column align-items-<?php echo $is_me ? 'end' : 'start'; ?>">
+                  <div class="col-9 col-md-8 px-1 px-md-3 d-flex flex-column align-items-<?php echo $is_me ? 'end' : 'start'; ?>">
                     <span class="py-2 px-4 rounded <?php echo $is_me ? 'bg-primary text-light text-end' : 'bg-light'; ?>">
                       <?php echo html($msg['text']); ?>
                     </span>
-                    <span class="text-muted mt-2"><?php echo html($msg['sent']); ?></span>
+                    <span class="text-muted fst-italic mt-2"><?php echo html($msg['sent']); ?></span>
                   </div>
                 </div>
               <?php endforeach; ?>
@@ -131,10 +131,12 @@ if ($res = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
               <input type="hidden" name="offer_id" value="<?php echo html($exchange['offer_id']) ?>">
               <input type="hidden" name="to_user" value="<?php echo html($exchange['owner_id']) ?>">
               <div class="row">
-                <div class="col-10">
+                <div class="col-12 col-md-10">
                   <input type="text" name="message" maxlength="65535" class="form-control">
                 </div>
-                <button name="send_message" class="col btn btn-primary mx-2">Send</button>
+                <div class="col d-flex mt-2 mt-md-0">
+                  <button name="send_message" class="flex-fill btn btn-primary">Send</button>
+                </div>
               </div>
             </form>
           </div>

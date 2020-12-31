@@ -35,6 +35,7 @@ $stmt = query_execute($db, $top3_violins_sql);
 <body>
   <?php require('templates/navbar.php') ?>
   <main class="container">
+
     <div class="my-4">
       <?php if (authenticated()) :; ?>
         <h1>Hi, <?php echo html($name) ?>.</h1>

@@ -5,13 +5,3 @@
 .chosen {
   background-color: #ededed;
 }
-
-.card {
-  min-width: 800px;
-  max-width: 900px;
-}
-
-.exchange {
-  min-width: 800px;
-  max-width: 1100px;
-}

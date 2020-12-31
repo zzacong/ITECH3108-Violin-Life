@@ -106,21 +106,21 @@ foreach ($res as $row) {
       <div class="card my-4 <?php echo $accepted ? 'accepted' : ''; ?>">
         <div class="card-body">
           <div class="row">
-            <div class="col-7">
+            <div class="col-12 col-md-7 mb-3">
               <?php $owned = $violin['owner_username'] === current_user(); ?>
-              <h4 class="card-title">
-                <?php echo html($violin['title']); ?>
-                <span class="badge bg-success ms-3"><?php echo $owned ? 'owned' : '' ?></span>
-                <span class="badge bg-secondary"><?php echo $accepted ? 'closed' : '' ?></span>
-              </h4>
-              <h6 class="card-subtitle text-secondary mt-3"><?php echo html($violin['seeking']); ?></h6>
+              <h4 class="card-title"><?php echo html($violin['title']); ?></h4>
+              <div>
+                <span class="badge bg-success"><?php echo $owned ? 'owned' : '' ?></span>
+                <span class="badge bg-secondary"><?php echo $accepted ? 'unavailable' : '' ?></span>
+              </div>
             </div>
             <div class="col">
-              <p class="text-primary text-end">Owned by: <?php echo html($violin['owner_name']) . ' (' . html($violin['owner_username']) . ') '; ?></p>
-              <p class="text-muted text-end">Submitted at: <?php echo html($violin['submitted']); ?></p>
+              <p class="text-primary text-md-end mb-1">Owned by: <?php echo html($violin['owner_name']) . ' (' . html($violin['owner_username']) . ') '; ?></p>
+              <p class="text-muted text-md-end">Submitted at: <?php echo html($violin['submitted']); ?></p>
             </div>
           </div>
-          <p class="card-text mt-3"><?php echo html($violin['description']); ?></p>
+          <p class="card-subtitle text-secondary fw-bold mt-md-2"><?php echo html($violin['seeking']); ?></p>
+          <p class="card-text"><?php echo html($violin['description']); ?></p>
         </div>
         <div class="card-body">
           <ul class="list-group">
@@ -128,27 +128,29 @@ foreach ($res as $row) {
               <?php foreach ($violin['offers'] as $offer) :; ?>
                 <li class="list-group-item <?php echo ($offer['chosen']) ? 'chosen' : ''; ?>">
                   <div class="row align-items-start">
+                    <div class="col-12 col-md-6">
+                      <p class="fw-bold mb-1">Offered by: <?php echo html($offer['offerer_name']) . ' (' . html($offer['offerer_username']) . ') '; ?></p>
+                    </div>
                     <div class="col">
-                      <p class="fw-bold">Offered by: <?php echo html($offer['offerer_name']) . ' (' . html($offer['offerer_username']) . ') '; ?></p>
-                      <p class="fs-6 text-muted"><?php echo html($offer['offer']); ?></p>
+                      <p class="text-muted text-md-end">Offered at: <?php echo html($offer['offered']) ?></p>
                     </div>
-                    <div class="col d-flex flex-column align-items-end">
-                      <p class="text-muted text-end">Offered at: <?php echo html($offer['offered']) ?></p>
-                      <?php if (!$accepted && $violin['owner_username'] === current_user()) : ?>
-                        <?php if ($errors['general']) : ?>
-                          <span class="badge bg-danger"><?php echo $errors['general']; ?></span>
-                        <?php else : ?>
-                          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                            <input type="hidden" name="violin_id" value="<?php echo html($violin['violin_id']); ?>">
-                            <input type="hidden" name="offer_id" value="<?php echo html($offer['offer_id']); ?>">
-                            <button name="accept_offer" class="btn btn-success">Accept</button>
-                          </form>
-                        <?php endif; ?>
+                  </div>
+                  <p class="card-text"><?php echo html($offer['offer']); ?></p>
+                  <div class="d-flex justify-content-end">
+                    <?php if (!$accepted && $violin['owner_username'] === current_user()) : ?>
+                      <?php if ($errors['general']) : ?>
+                        <span class="badge bg-danger"><?php echo $errors['general']; ?></span>
+                      <?php else : ?>
+                        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                          <input type="hidden" name="violin_id" value="<?php echo html($violin['violin_id']); ?>">
+                          <input type="hidden" name="offer_id" value="<?php echo html($offer['offer_id']); ?>">
+                          <button name="accept_offer" class="btn btn-sm btn-success">Accept</button>
+                        </form>
                       <?php endif; ?>
-                      <?php if ($offer['chosen']) :; ?>
-                        <span class="badge bg-secondary">Accepted</span>
-                      <?php endif; ?>
-                    </div>
+                    <?php endif; ?>
+                    <?php if ($offer['chosen']) :; ?>
+                      <span class="badge bg-secondary">Accepted</span>
+                    <?php endif; ?>
                   </div>
                 </li>
               <?php endforeach; ?>

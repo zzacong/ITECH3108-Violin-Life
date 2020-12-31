@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
       <input type="text" name="location" id="inputLocation" placeholder="location" maxlength="255" value="<?php echo html($location); ?>" class="form-control">
 
       <button name="submit" class="btn btn-primary my-4 px-4">Register</button>
-      <span class="mx-2">Already a user? <a href="login.php">Log in here.</a></span>
+      <span class="mx-2 d-block d-md-inline">Already a user? <a href="login.php">Log in here.</a></span>
 
     </form>
   </main>

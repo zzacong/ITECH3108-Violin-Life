@@ -88,7 +88,7 @@ else :
 
         <h4>Violin: <?php echo html($res['title']); ?> </h4>
         <p class="text-muted"><?php echo html($res['seeking']); ?></p>
-        <p class="text-secondary"><?php echo html($res['description']); ?></p>
+        <p><?php echo html($res['description']); ?></p>
 
         <label for="input_offer" class="form-label">Offer: </label>
         <textarea name="offer" id="input_offer" placeholder="what are you willing to offer?" value="<?php echo html($offer); ?>" class="form-control"></textarea>
