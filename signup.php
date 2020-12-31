@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
     ];
     $stmt = query_execute($db, $sign_up_sql, $bindings);
 
-    if ($stmt->rowCount() > 0) {
+    if ($stmt->rowCount()) {
       login($username);
       header('Location: index.php');
     } else {
@@ -113,25 +113,25 @@ if (isset($_POST['submit'])) {
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 
       <label for="inputName" class="form-label">Full Name: </label>
-      <input type="text" name="name" id="inputName" placeholder="name" value="<?php echo html($name); ?>" class="form-control">
+      <input type="text" name="name" id="inputName" placeholder="name" maxlength="255" value="<?php echo html($name); ?>" class="form-control">
       <p class="text-danger"><?php echo $errors['name'] ?></p>
 
       <label for="inputUsername" class="form-label">Username: </label>
-      <input type="text" name="username" id="inputUsername" placeholder="username" value="<?php echo html($username); ?>" class="form-control">
+      <input type="text" name="username" id="inputUsername" placeholder="username" maxlength="255" value="<?php echo html($username); ?>" class="form-control">
       <p class="text-danger"><?php echo $errors['username'] ?></p>
 
       <label for="inputEmail" class="form-label">Email: </label>
-      <input type="email" name="email" id="inputEmail" placeholder="email" value="<?php echo html($email); ?>" class="form-control">
+      <input type="email" name="email" id="inputEmail" placeholder="email" maxlength="255" value="<?php echo html($email); ?>" class="form-control">
       <p class="text-danger"><?php echo $errors['email'] ?></p>
 
       <label for="input_password" class="form-label">Password: </label>
-      <input type="password" name="password" id="input_password" placeholder="password" value="<?php echo html($password); ?>" class="form-control">
+      <input type="password" name="password" id="input_password" placeholder="password" maxlength="255" value="<?php echo html($password); ?>" class="form-control">
       <p class="text-danger"><?php echo $errors['password'] ?></p>
 
       <label for="inputLocation" class="form-label">Location: </label>
-      <input type="text" name="location" id="inputLocation" placeholder="location" value="<?php echo html($location); ?>" class="form-control">
+      <input type="text" name="location" id="inputLocation" placeholder="location" maxlength="255" value="<?php echo html($location); ?>" class="form-control">
 
-      <input type="submit" name="submit" value="Register" class="btn btn-primary my-4 px-4">
+      <button name="submit" class="btn btn-primary my-4 px-4">Register</button>
       <span class="mx-2">Already a user? <a href="login.php">Log in here.</a></span>
 
     </form>

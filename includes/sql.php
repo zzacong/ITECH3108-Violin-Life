@@ -10,8 +10,8 @@ $top3_violins_sql = "
     offer of
   JOIN 
     violin vi 
-  ON 
-    of.violin_id = vi.id
+    ON 
+      of.violin_id = vi.id
   GROUP BY of.violin_id, vi.title
   ORDER BY no_of_offer DESC
   LIMIT 3
@@ -27,8 +27,8 @@ $sign_up_sql = "
 
 $view_offers_sql = "
   SELECT 
-    u.name AS owner_name, 
-    u.username AS owner_username, 
+    uow.name AS owner_name, 
+    uow.username AS owner_username, 
     v.id AS violin_id, 
     v.title, 
     v.seeking, 
@@ -38,22 +38,22 @@ $view_offers_sql = "
     o.offer, 
     o.accepted, 
     o.submitted AS offered, 
-    ou.name AS offerer_name, 
-    ou.username AS offerer_username    
+    uof.name AS offerer_name, 
+    uof.username AS offerer_username    
   FROM 
-    `user` u
-  JOIN
     violin v
-  ON 
-    u.id = v.user_id
-  JOIN
+  LEFT JOIN
+    `user` uow
+    ON 
+      v.user_id = uow.id
+  LEFT JOIN
     offer o
-  ON 
-    v.id = o.violin_id
-  JOIN
-    `user` ou
-  ON 
-    o.user_id = ou.id
+    ON 
+      v.id = o.violin_id
+  LEFT JOIN
+    `user` uof
+    ON 
+      o.user_id = uof.id
   ORDER BY
     v.submitted DESC, o.submitted DESC
   ";
@@ -99,6 +99,7 @@ $get_exchanges_sql = "
     uof.name AS offerer_name,
     uof.username AS offerer_username,
     v.title AS violin_title,
+    v.seeking,
     uow.id AS owner_id,
     uow.name AS owner_name,
     uow.username AS owner_username

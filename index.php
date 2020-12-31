@@ -47,27 +47,29 @@ $stmt = query_execute($db, $top3_violins_sql);
       <h3>There <?php echo ($no_of_violin > 1) ? "are $no_of_violin violins" : "is $no_of_violin violin" ?> on the site.</h3>
     </div>
 
-    <div>
-      <h4 class="mb-3">Top 3 most-wanted violins</h4>
-      <table class="table table-striped w-75">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Violin</th>
-            <th scope="col">No of offers</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($stmt as $row) :; ?>
+    <section class="card">
+      <div class="card-body">
+        <h4 class="card-title mb-4">The top 3 most-wanted violins</h4>
+        <table class="table table-striped">
+          <thead>
             <tr>
-              <th scope="row"><?php echo $row['violin_id'] ?></td>
-              <td><?php echo html($row['title']); ?></td>
-              <td><?php echo $row['no_of_offer']; ?></td>
+              <th scope="col">ID</th>
+              <th scope="col">Violin</th>
+              <th scope="col">No of offers</th>
             </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            <?php foreach ($stmt as $row) :; ?>
+              <tr>
+                <th scope="row"><?php echo $row['violin_id'] ?></td>
+                <td><?php echo html($row['title']); ?></td>
+                <td><?php echo $row['no_of_offer']; ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </section>
   </main>
 </body>
 

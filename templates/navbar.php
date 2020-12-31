@@ -10,7 +10,8 @@ require_once('includes/utils.php');
     <div class="d-flex ps-4">
       <a href="index.php" class="navbar-brand">Violin Life</a>
       <?php if (authenticated()) :; ?>
-        <a href="offers.php" class="nav-link">Offers</a>
+        <a href="offers.php" class="nav-link">View Offers</a>
+        <a href="add_violin.php" class="nav-link">Add Violin</a>
         <a href="message.php" class="nav-link">Messages</a>
       <?php endif; ?>
     </div>

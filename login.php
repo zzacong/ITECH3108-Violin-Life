@@ -63,14 +63,14 @@ if (isset($_POST['submit'])) {
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 
       <label for="input_username_or_email" class="form-label">Username or Email: </label>
-      <input type="text" name="username_or_email" id="input_username_or_email" placeholder="username or email" value="<?php echo html($username_or_email); ?>" class="form-control">
+      <input type="text" name="username_or_email" id="input_username_or_email" placeholder="username or email" maxlength="255" value="<?php echo html($username_or_email); ?>" class="form-control">
       <p class="text-danger"><?php echo $errors['username_or_email'] ?></p>
 
       <label for="input_password" class="form-label">Password: </label>
-      <input type="password" name="password" id="input_password" placeholder="password" value="<?php echo html($password); ?>" class="form-control">
+      <input type="password" name="password" id="input_password" placeholder="password" maxlength="255" value="<?php echo html($password); ?>" class="form-control">
       <p class="text-danger"><?php echo $errors['password'] ?></p>
 
-      <input type="submit" name="submit" value="Log In" class="btn btn-primary my-4 px-4">
+      <button name="submit" class="btn btn-primary my-4 px-4">Log In</button>
       <span class="mx-2">Not a user? <a href="signup.php">Sign up here.</a></span>
 
     </form>

@@ -17,4 +17,10 @@ function query_execute($db, $query, $args = null) {
   return $stmt;
 }
 
+function get_user_id($db, $sql) {
+  $stmt = query_execute($db, $sql, [':username' => current_user()]);
+  $res = $stmt->fetch();
+  return $res['id'];
+}
+
 ?>

@@ -14,7 +14,7 @@ $errors = ['general' => ''];
 if (isset($_POST['accept_offer'])) {
   $violin_id = $_POST['violin_id'] ?? '';
   $offer_id = $_POST['offer_id'] ?? '';
-  echo $violin_id;
+
   if (!$offer_id || !$violin_id) {
     $errors['general'] = 'No offer/violin id';
   }
@@ -41,9 +41,8 @@ if (isset($_POST['accept_offer'])) {
       ':offer_id' => $offer_id
     ];
     $stmt = query_execute($db, $query, $bindings);
-    if ($stmt->rowCount() > 0) {
+    if ($stmt->rowCount()) {
     } else {
-      echo "failed";
       print_r($stmt->errorInfo());
     }
   }
@@ -84,7 +83,9 @@ foreach ($res as $row) {
     $violins[$counter]['accepted'] = true;
     $offer['chosen'] = true;
   }
-  $violins[$counter]['offers'][] = $offer;
+  if ($row['offer_id']) {
+    $violins[$counter]['offers'][] = $offer;
+  }
 }
 
 ?>
@@ -104,7 +105,11 @@ foreach ($res as $row) {
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <h4 class="card-title"><?php echo html($violin['title']); ?></h4>
+              <?php $owned = $violin['owner_username'] === current_user(); ?>
+              <h4 class="card-title">
+                <?php echo html($violin['title']); ?>
+                <span class="badge bg-success ms-3"><?php echo $owned ? 'owned' : '' ?></span>
+              </h4>
               <h6 class="card-subtitle text-secondary mt-3"><?php echo html($violin['seeking']); ?></h6>
             </div>
             <div class="col">
@@ -116,33 +121,37 @@ foreach ($res as $row) {
         </div>
         <div class="card-body">
           <ul class="list-group">
-            <?php foreach ($violin['offers'] as $offer) :; ?>
-              <li class="list-group-item <?php echo ($offer['chosen']) ? 'chosen' : ''; ?>">
-                <div class="row align-items-start">
-                  <div class="col">
-                    <p class="fw-bold">Offered by: <?php echo html($offer['offerer_name']) . ' (' . html($offer['offerer_username']) . ') '; ?></p>
-                    <p class="fs-6 text-muted"><?php echo html($offer['offer']); ?></p>
-                  </div>
-                  <div class="col d-flex flex-column align-items-end">
-                    <p class="text-muted text-end">Offered at: <?php echo html($offer['offered']) ?></p>
-                    <?php if (!$violin['accepted'] && $violin['owner_username'] === current_user()) : ?>
-                      <?php if ($errors['general']) : ?>
-                        <span class="badge bg-danger"><?php echo $errors['general']; ?></span>
-                      <?php else : ?>
-                        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                          <input type="hidden" name="violin_id" value="<?php echo html($violin['violin_id']); ?>">
-                          <input type="hidden" name="offer_id" value="<?php echo html($offer['offer_id']); ?>">
-                          <button name="accept_offer" class="btn btn-success">Accept</button>
-                        </form>
+            <?php if (isset($violin['offers'])) :; ?>
+              <?php foreach ($violin['offers'] as $offer) :; ?>
+                <li class="list-group-item <?php echo ($offer['chosen']) ? 'chosen' : ''; ?>">
+                  <div class="row align-items-start">
+                    <div class="col">
+                      <p class="fw-bold">Offered by: <?php echo html($offer['offerer_name']) . ' (' . html($offer['offerer_username']) . ') '; ?></p>
+                      <p class="fs-6 text-muted"><?php echo html($offer['offer']); ?></p>
+                    </div>
+                    <div class="col d-flex flex-column align-items-end">
+                      <p class="text-muted text-end">Offered at: <?php echo html($offer['offered']) ?></p>
+                      <?php if (!$violin['accepted'] && $violin['owner_username'] === current_user()) : ?>
+                        <?php if ($errors['general']) : ?>
+                          <span class="badge bg-danger"><?php echo $errors['general']; ?></span>
+                        <?php else : ?>
+                          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                            <input type="hidden" name="violin_id" value="<?php echo html($violin['violin_id']); ?>">
+                            <input type="hidden" name="offer_id" value="<?php echo html($offer['offer_id']); ?>">
+                            <button name="accept_offer" class="btn btn-success">Accept</button>
+                          </form>
+                        <?php endif; ?>
                       <?php endif; ?>
-                    <?php endif; ?>
-                    <?php if ($offer['chosen']) :; ?>
-                      <span class="badge bg-secondary">Accepted</span>
-                    <?php endif; ?>
+                      <?php if ($offer['chosen']) :; ?>
+                        <span class="badge bg-secondary">Accepted</span>
+                      <?php endif; ?>
+                    </div>
                   </div>
-                </div>
-              </li>
-            <?php endforeach; ?>
+                </li>
+              <?php endforeach; ?>
+            <?php else : ?>
+              <li class="list-group-item text-muted fst-italic">No offer</li>
+            <?php endif; ?>
           </ul>
         </div>
         <?php if (!$violin['accepted'] && $violin['owner_username'] !== current_user()) :; ?>

@@ -33,6 +33,21 @@ else :
       $errors['offer'] = 'You must describe your offer.';
     }
 
+    $query = "
+    SELECT
+      accepted
+    FROM
+      offer
+    WHERE
+        violin_id = :violin_id
+      AND
+        accepted IS NOT NULL
+    ";
+    $stmt = query_execute($db, $query, [':violin_id' => $violin_id]);
+    if ($stmt->fetch()) {
+      $errors['general'] = 'Cannot make offer on this violin. This violin already has an accepted offer.';
+    }
+
     if (!array_filter($errors)) {
       $stmt = query_execute($db, $get_user_id_sql, [':username' => current_user()]);
       $res = $stmt->fetch();
@@ -45,7 +60,7 @@ else :
       ];
       $stmt = query_execute($db, $make_offer_sql, $bindings);
 
-      if ($stmt->rowCount() > 0) {
+      if ($stmt->rowCount()) {
         header('Location: offers.php');
         exit();
       } else {
@@ -66,7 +81,7 @@ else :
 
   <body>
     <?php require('templates/navbar.php') ?>
-    <main class="container">
+    <main class="container w-75">
       <h1 class="my-3">Make an Offer</h1>
 
       <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" class="mt-5">
@@ -81,7 +96,7 @@ else :
         <p class="text-danger"><?php echo $errors['general'] ?></p>
 
         <input type="hidden" name="violin_id" value="<?php echo html($violin_id); ?>">
-        <input type="submit" name="submit" value="Submit Offer" class="btn btn-primary my-4 px-4">
+        <button name="submit" class="btn btn-primary my-4 px-4">Submit Offer</button>
 
       </form>
       </div>
