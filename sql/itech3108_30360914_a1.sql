@@ -84,7 +84,7 @@ VALUES (
     'Mount Helen'
   ),
   (
-    'The Tutor',
+    'Tutor',
     'tutor',
     'tutor@federation.edu.au',
     '$2y$10$123419063030000999999ubIYLh222lwfXDlCqWB9GZqOj6FqJEke',

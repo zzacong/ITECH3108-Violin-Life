@@ -101,19 +101,22 @@ foreach ($res as $row) {
   <?php require('templates/navbar.php') ?>
   <main class="container">
     <?php foreach ($violins as $violin) :; ?>
-      <div class="card my-4 <?php echo ($violin['accepted']) ? 'accepted' : ''; ?>">
+      <?php $accepted = $violin['accepted'] ? true : false; ?>
+
+      <div class="card my-4 <?php echo $accepted ? 'accepted' : ''; ?>">
         <div class="card-body">
           <div class="row">
-            <div class="col">
+            <div class="col-7">
               <?php $owned = $violin['owner_username'] === current_user(); ?>
               <h4 class="card-title">
                 <?php echo html($violin['title']); ?>
                 <span class="badge bg-success ms-3"><?php echo $owned ? 'owned' : '' ?></span>
+                <span class="badge bg-secondary"><?php echo $accepted ? 'closed' : '' ?></span>
               </h4>
               <h6 class="card-subtitle text-secondary mt-3"><?php echo html($violin['seeking']); ?></h6>
             </div>
             <div class="col">
-              <p class="text-primary text-end">Owner: <?php echo html($violin['owner_name']) . ' (' . html($violin['owner_username']) . ') '; ?></p>
+              <p class="text-primary text-end">Owned by: <?php echo html($violin['owner_name']) . ' (' . html($violin['owner_username']) . ') '; ?></p>
               <p class="text-muted text-end">Submitted at: <?php echo html($violin['submitted']); ?></p>
             </div>
           </div>
@@ -131,7 +134,7 @@ foreach ($res as $row) {
                     </div>
                     <div class="col d-flex flex-column align-items-end">
                       <p class="text-muted text-end">Offered at: <?php echo html($offer['offered']) ?></p>
-                      <?php if (!$violin['accepted'] && $violin['owner_username'] === current_user()) : ?>
+                      <?php if (!$accepted && $violin['owner_username'] === current_user()) : ?>
                         <?php if ($errors['general']) : ?>
                           <span class="badge bg-danger"><?php echo $errors['general']; ?></span>
                         <?php else : ?>
@@ -154,7 +157,7 @@ foreach ($res as $row) {
             <?php endif; ?>
           </ul>
         </div>
-        <?php if (!$violin['accepted'] && $violin['owner_username'] !== current_user()) :; ?>
+        <?php if (!$accepted && $violin['owner_username'] !== current_user()) :; ?>
           <form action="make_offer.php" method="post" class="card-body align-self-end">
             <button name="violin_id" value="<?php echo html($violin['violin_id']) ?>" class="btn btn-primary">Make an Offer</button>
           </form>

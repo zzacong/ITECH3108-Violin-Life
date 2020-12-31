@@ -68,7 +68,7 @@ if ($res = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
             </h5>
             <div class="row text-muted my-2">
               <div class="col">
-                <p class="mb-1 card-text">Owner:
+                <p class="mb-1 card-text">Owned by:
                   <?php echo html($exchange['owner_name'] . ' (' . $exchange['owner_username'] . ') '); ?>
                 </p>
               </div>
