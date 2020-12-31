@@ -61,11 +61,13 @@ if ($res = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
       <?php foreach ($message_group as $exchange) :; ?>
         <section class="card exchange my-4">
           <div class="card-header">
-            <?php $owned = $exchange['owner_username'] === current_user(); ?>
-            <h5 class="card-title py-2">
+            <h5 class="card-title my-2 d-md-inline-block">
               Violin: <?php echo html($exchange['violin_title']); ?>
-              <span class="badge bg-success ms-3"><?php echo $owned ? 'owned' : '' ?></span>
             </h5>
+            <?php $owned = $exchange['owner_username'] === current_user(); ?>
+            <?php if ($owned) :; ?>
+              <span class="badge bg-success ms-md-3 align-middle">owned</span>
+            <?php endif; ?>
             <div class="row text-muted my-2">
               <div class="col-12 col-md-6">
                 <p class="mb-1 card-text">Owned by:
@@ -114,11 +116,15 @@ if ($res = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
                       </span>
                     </div>
                   <?php endif; ?>
-                  <div class="col-9 col-md-8 px-1 px-md-3 d-flex flex-column align-items-<?php echo $is_me ? 'end' : 'start'; ?>">
-                    <span class="py-2 px-4 rounded <?php echo $is_me ? 'bg-primary text-light text-end' : 'bg-light'; ?>">
+                  <div class="col-9 col-md-8 px-1 px-md-3 d-flex flex-column 
+                              <?php echo $is_me ? 'align-items-end' : 'align-items-start'; ?>">
+                    <span class="py-2 px-4 rounded 
+                                <?php echo $is_me ? 'bg-primary text-light text-end' : 'bg-light'; ?>">
                       <?php echo html($msg['text']); ?>
                     </span>
-                    <span class="text-muted fst-italic mt-2"><?php echo html($msg['sent']); ?></span>
+                    <span class="text-muted fst-italic mt-2">
+                      <?php echo html($msg['sent']); ?>
+                    </span>
                   </div>
                 </div>
               <?php endforeach; ?>
@@ -145,8 +151,10 @@ if ($res = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
       </div>
       </section>
     <?php else :; ?>
-      <section>
-        No Messages
+      <section class="card">
+        <div class="card-body">
+          <p class="card-text text-center text-muted fst-italic">No Messages</p>
+        </div>
       </section>
     <?php endif; ?>
   </main>

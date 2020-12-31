@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
   // * Validate name
   if ($name) {
     if (!preg_match('/^[a-zA-Z.\s-]+$/', $name)) {
-      $errors['name'] = "Name can contain letters and '-' character only.";
+      $errors['name'] = "Name can contain letters, '-' and '.' only.";
     }
   } else {
     $errors['name'] = "Name is required.";
@@ -30,15 +30,13 @@ if (isset($_POST['submit'])) {
   if ($username) {
     $username = $_POST['username'];
     if (preg_match('/^[a-zA-Z0-9._-]+$/', $username)) {
-      $query = "SELECT * FROM `user` WHERE username = :username";
-      $bindings = [':username' => $username];
-      $stmt = query_execute($db, $query, $bindings);
+      $stmt = query_execute($db, $get_user_id_sql, [':username' => $username]);
 
       if ($stmt->fetch()) {
         $errors['username'] = "This username has been taken.";
       }
     } else {
-      $errors['username'] = "Username can contain letters, numbers and special characters ('-', '_', '.') only.";
+      $errors['username'] = "Username can contain letters, numbers and ('-', '_', '.') only.";
     }
   } else {
     $errors['username'] = "Username is required.";
@@ -48,8 +46,7 @@ if (isset($_POST['submit'])) {
   if ($email) {
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $query = "SELECT * FROM `user` WHERE email = :email";
-      $bindings = [':email' => $email];
-      $stmt = query_execute($db, $query, $bindings);
+      $stmt = query_execute($db, $query, [':email' => $email]);
 
       if ($stmt->fetch()) {
         $errors['email'] = "This email has been taken.";
@@ -63,8 +60,6 @@ if (isset($_POST['submit'])) {
 
   // * Validate password
   if ($password) {
-    $password = $_POST['password'];
-
     if (strlen($password) < 5) {
       $errors['password'] = "Password must have at least 5 characters.";
     }
@@ -112,24 +107,24 @@ if (isset($_POST['submit'])) {
 
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 
-      <label for="inputName" class="form-label">Full Name: </label>
-      <input type="text" name="name" id="inputName" placeholder="name" maxlength="255" value="<?php echo html($name); ?>" class="form-control">
+      <label for="input_name" class="form-label">Full Name: </label>
+      <input type="text" name="name" id="input_name" placeholder="name" maxlength="255" value="<?php echo html($name); ?>" class="form-control">
       <p class="text-danger"><?php echo $errors['name'] ?></p>
 
-      <label for="inputUsername" class="form-label">Username: </label>
-      <input type="text" name="username" id="inputUsername" placeholder="username" maxlength="255" value="<?php echo html($username); ?>" class="form-control">
+      <label for="input_username" class="form-label">Username: </label>
+      <input type="text" name="username" id="input_username" placeholder="username" maxlength="255" value="<?php echo html($username); ?>" class="form-control">
       <p class="text-danger"><?php echo $errors['username'] ?></p>
 
-      <label for="inputEmail" class="form-label">Email: </label>
-      <input type="email" name="email" id="inputEmail" placeholder="email" maxlength="255" value="<?php echo html($email); ?>" class="form-control">
+      <label for="input_email" class="form-label">Email: </label>
+      <input type="email" name="email" id="input_email" placeholder="email" maxlength="255" value="<?php echo html($email); ?>" class="form-control">
       <p class="text-danger"><?php echo $errors['email'] ?></p>
 
       <label for="input_password" class="form-label">Password: </label>
       <input type="password" name="password" id="input_password" placeholder="password" maxlength="255" value="<?php echo html($password); ?>" class="form-control">
       <p class="text-danger"><?php echo $errors['password'] ?></p>
 
-      <label for="inputLocation" class="form-label">Location: </label>
-      <input type="text" name="location" id="inputLocation" placeholder="location" maxlength="255" value="<?php echo html($location); ?>" class="form-control">
+      <label for="input_location" class="form-label">Location: </label>
+      <input type="text" name="location" id="input_location" placeholder="location" maxlength="255" value="<?php echo html($location); ?>" class="form-control">
 
       <button name="submit" class="btn btn-primary my-4 px-4">Register</button>
       <span class="mx-2 d-block d-md-inline">Already a user? <a href="login.php">Log in here.</a></span>

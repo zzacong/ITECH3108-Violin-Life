@@ -115,8 +115,13 @@ foreach ($res as $row) {
               </div>
             </div>
             <div class="col">
-              <p class="text-primary text-md-end mb-1">Owned by: <?php echo html($violin['owner_name']) . ' (' . html($violin['owner_username']) . ') '; ?></p>
-              <p class="text-muted text-md-end">Submitted at: <?php echo html($violin['submitted']); ?></p>
+              <p class="text-primary text-md-end mb-1">
+                Owned by:
+                <?php echo html($violin['owner_name']) . ' (' . html($violin['owner_username']) . ') '; ?>
+              </p>
+              <p class="text-muted text-md-end">
+                Submitted at: <?php echo html($violin['submitted']); ?>
+              </p>
             </div>
           </div>
           <p class="card-subtitle text-secondary fw-bold mt-md-2"><?php echo html($violin['seeking']); ?></p>
@@ -129,10 +134,15 @@ foreach ($res as $row) {
                 <li class="list-group-item <?php echo ($offer['chosen']) ? 'chosen' : ''; ?>">
                   <div class="row align-items-start">
                     <div class="col-12 col-md-6">
-                      <p class="fw-bold mb-1">Offered by: <?php echo html($offer['offerer_name']) . ' (' . html($offer['offerer_username']) . ') '; ?></p>
+                      <p class="fw-bold mb-1">
+                        Offered by:
+                        <?php echo html($offer['offerer_name']) . ' (' . html($offer['offerer_username']) . ') '; ?>
+                      </p>
                     </div>
                     <div class="col">
-                      <p class="text-muted text-md-end">Offered at: <?php echo html($offer['offered']) ?></p>
+                      <p class="text-muted text-md-end">
+                        Offered at: <?php echo html($offer['offered']) ?>
+                      </p>
                     </div>
                   </div>
                   <p class="card-text"><?php echo html($offer['offer']); ?></p>
@@ -161,7 +171,9 @@ foreach ($res as $row) {
         </div>
         <?php if (!$accepted && $violin['owner_username'] !== current_user()) :; ?>
           <form action="make_offer.php" method="post" class="card-body align-self-end">
-            <button name="violin_id" value="<?php echo html($violin['violin_id']) ?>" class="btn btn-primary">Make an Offer</button>
+            <button name="violin_id" value="<?php echo html($violin['violin_id']) ?>" class="btn btn-primary">
+              Make an Offer
+            </button>
           </form>
         <?php endif; ?>
       </div>
