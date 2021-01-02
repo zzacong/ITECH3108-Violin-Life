@@ -80,35 +80,35 @@ VALUES (
     'Zhi Zao Ong',
     '30360914',
     'zhizaoong@students.federation.edu.au',
-    '$2y$10$123419063030000999999ubIYLh222lwfXDlCqWB9GZqOj6FqJEke',
+    '$2y$12$RMmWMRJLXPDW6oqpBbp.v.NY1Q03jAVOk11JKVdF7CBtEntWDSi4O',
     'Mount Helen'
   ),
   (
     'Tutor',
     'tutor',
     'tutor@federation.edu.au',
-    '$2y$10$123419063030000999999ubIYLh222lwfXDlCqWB9GZqOj6FqJEke',
+    '$2y$12$VBUqxW9v6FrsgvEZHicIZOizVwFpLYtVxYTnqgUSVdT.c9effFCF2',
     'Ballarat'
   ),
   (
     'Carree Grunwald',
     'cgrundwald',
     'cgrundwald@gmail.com',
-    '$2y$10$123419063030000999999ubIYLh222lwfXDlCqWB9GZqOj6FqJEke',
+    '$2y$12$DWJmjws8/PmyzbjJkMpyO.5HwLE9H2T1PFwKC58diuTsn9Rqbv4Qm',
     'Melbourne'
   ),
   (
     'Elsa Watting',
     'ewatting',
     'ewatting@gmail.com',
-    '$2y$10$123419063030000999999ubIYLh222lwfXDlCqWB9GZqOj6FqJEke',
+    '$2y$12$iaHaeORNQjhpNgK8l5Cf7erZu5GjAe0xf6lHYE76z12vH98UbU.YC',
     'Ballarat'
   ),
   (
     'De Treffrey',
     'dtreffy',
     'dtreffy@gmail.com',
-    '$2y$10$123419063030000999999ubIYLh222lwfXDlCqWB9GZqOj6FqJEke',
+    '$2y$12$Fx2bo8Pbh3tlloXjYGHbtODXdJrfNvAnq0Zq4OGTXpeib0B2T.i4u',
     'Melbourne'
   );
 -- 
@@ -137,10 +137,17 @@ VALUES (
   ),
   (
     3,
-    'Arioso Violin Outfit',
+    'Arioso Violin',
     'Hand-crafted to last and sound spectacular. #1 recommended by teachers.',
     'Accepting AU$350. Price is negotiable.',
     '2020-12-10 15:00:00'
+  ),
+  (
+    1,
+    'Gliga III Violin',
+    'An excellent choice for beginners.',
+    '5 years old violin. Selling for $200.',
+    '2020-12-14 12:10:00'
   );
 -- 
 -- 
@@ -157,6 +164,7 @@ VALUES
   (4, 1, 'I can pay AU$290.', '2020-12-15 14:20:00'),
   (1, 3, 'I would like to make an exchange.', '2020-12-15 09:45:00'),
   (5, 3, 'Would you accept AU$310?', '2020-12-16 15:10:00'),
+  (2, 3, 'I have a guitar. Can we exchange?', '2020-12-16 20:45:00'),
   (1, 2, 'I will pay AU$420', '2020-12-18 20:30:00');
 -- 
 -- 
