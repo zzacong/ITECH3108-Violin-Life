@@ -100,13 +100,14 @@ foreach ($res as $row) {
 <body>
   <?php require('templates/navbar.php') ?>
   <main class="container">
+    <h1 class="my-3">List of Violins</h1>
     <?php foreach ($violins as $violin) :; ?>
       <?php $accepted = $violin['accepted'] ? true : false; ?>
 
       <div class="card my-4 <?php echo $accepted ? 'accepted' : ''; ?>">
         <div class="card-body">
           <div class="row">
-            <div class="col-12 col-md-7 mb-3">
+            <div class="col-12 col-md mb-3">
               <?php $owned = $violin['owner_username'] === current_user(); ?>
               <h4 class="card-title"><?php echo html($violin['title']); ?></h4>
               <div>
@@ -133,7 +134,7 @@ foreach ($res as $row) {
               <?php foreach ($violin['offers'] as $offer) :; ?>
                 <li class="list-group-item <?php echo ($offer['chosen']) ? 'chosen' : ''; ?>">
                   <div class="row align-items-start">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md">
                       <p class="fw-bold mb-1">
                         Offered by:
                         <?php echo html($offer['offerer_name']) . ' (' . html($offer['offerer_username']) . ') '; ?>

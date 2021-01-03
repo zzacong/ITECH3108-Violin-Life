@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 
       <label for="input_name" class="form-label">Full Name: </label>
-      <input type="text" name="name" id="input_name" placeholder="name" maxlength="255" value="<?php echo html($name); ?>" class="form-control">
+      <input type="text" name="name" id="input_name" placeholder="name" maxlength="255" value="<?php echo html($name); ?>" class="form-control" autofocus>
       <p class="text-danger"><?php echo $errors['name'] ?></p>
 
       <label for="input_username" class="form-label">Username: </label>

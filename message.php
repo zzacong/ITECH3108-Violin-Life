@@ -69,7 +69,7 @@ if ($res = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
               <span class="badge bg-success ms-md-3 align-middle">owned</span>
             <?php endif; ?>
             <div class="row text-muted my-2">
-              <div class="col-12 col-md-6">
+              <div class="col-12 col-md">
                 <p class="mb-1 card-text">Owned by:
                   <?php echo html($exchange['owner_name'] . ' (' . $exchange['owner_username'] . ') '); ?>
                 </p>

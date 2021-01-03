@@ -91,7 +91,7 @@ else :
         <p><?php echo html($res['description']); ?></p>
 
         <label for="input_offer" class="form-label">Offer: </label>
-        <textarea name="offer" id="input_offer" placeholder="what are you willing to offer?" value="<?php echo html($offer); ?>" class="form-control"></textarea>
+        <textarea name="offer" id="input_offer" placeholder="what are you willing to offer?" value="<?php echo html($offer); ?>" class="form-control" autofocus></textarea>
         <p class="text-danger"><?php echo $errors['offer'] ?></p>
         <p class="text-danger"><?php echo $errors['general'] ?></p>
 

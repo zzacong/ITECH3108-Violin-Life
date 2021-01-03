@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 
       <label for="input_title" class="form-label">Violin title: </label>
-      <input type="text" name="title" id="input_title" placeholder="violin title" maxlength="255" value="<?php echo html($title); ?>" class="form-control">
+      <input type="text" name="title" id="input_title" placeholder="violin title" maxlength="255" value="<?php echo html($title); ?>" class="form-control" autofocus>
       <p class="text-danger"><?php echo $errors['title'] ?></p>
 
       <label for="input_description" class="form-label">Description: </label>

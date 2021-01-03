@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 
       <label for="input_username_or_email" class="form-label">Username or Email: </label>
-      <input type="text" name="username_or_email" id="input_username_or_email" placeholder="username or email" maxlength="255" value="<?php echo html($username_or_email); ?>" class="form-control">
+      <input type="text" name="username_or_email" id="input_username_or_email" placeholder="username or email" maxlength="255" value="<?php echo html($username_or_email); ?>" class="form-control" autofocus>
       <p class="text-danger"><?php echo $errors['username_or_email'] ?></p>
 
       <label for="input_password" class="form-label">Password: </label>
