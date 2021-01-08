@@ -63,11 +63,11 @@ if (isset($_POST['submit'])) {
 <html lang="en">
 
 <head>
-  <?php require('templates/head.php') ?>
+  <?php require 'templates/head.php'; ?>
 </head>
 
 <body>
-  <?php require('templates/navbar.php') ?>
+  <?php require 'templates/navbar.php'; ?>
 
   <main class="container w-75">
     <h1 class="my-3">Add a Violin</h1>

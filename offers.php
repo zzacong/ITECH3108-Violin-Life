@@ -49,19 +49,19 @@ if (isset($_POST['accept_offer'])) {
 }
 
 $violins = array();
-$titles = array();
+$ids = array();
 $counter = -1;
 $stmt = query_execute($db, $view_offers_sql);
 $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($res as $row) {
-  $violin_title = $row['title'];
-  if (!array_key_exists($violin_title, $titles)) {
+  $violin_id = $row['violin_id'];
+  if (!in_array($violin_id, $ids)) {
     $counter++;
-    $titles[$violin_title] = $violin_title;
+    $ids[] = $violin_id;
     $violin = [
-      'violin_id' => $row['violin_id'],
-      'title' => $violin_title,
+      'violin_id' => $violin_id,
+      'title' => $row['title'],
       'owner_name' => $row['owner_name'],
       'owner_username' => $row['owner_username'],
       'seeking' => $row['seeking'],
@@ -94,11 +94,11 @@ foreach ($res as $row) {
 <html lang="en">
 
 <head>
-  <?php require('templates/head.php') ?>
+  <?php require 'templates/head.php'; ?>
 </head>
 
 <body>
-  <?php require('templates/navbar.php') ?>
+  <?php require 'templates/navbar.php'; ?>
   <main class="container">
     <h1 class="my-3">List of Violins</h1>
     <?php foreach ($violins as $violin) :; ?>

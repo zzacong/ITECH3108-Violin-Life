@@ -29,11 +29,11 @@ $stmt = query_execute($db, $top3_violins_sql);
 <html lang="en">
 
 <head>
-  <?php require('templates/head.php') ?>
+  <?php require 'templates/head.php'; ?>
 </head>
 
 <body>
-  <?php require('templates/navbar.php') ?>
+  <?php require 'templates/navbar.php'; ?>
   <main class="container">
 
     <div class="my-4">

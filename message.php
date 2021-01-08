@@ -1,11 +1,11 @@
 <?php
 
 session_start();
-require_once('includes/config.php');
-require_once('includes/sql.php');
-require_once('includes/auth.php');
-require_once('includes/utils.php');
-require_once('includes/db_connect.php');
+require_once 'includes/config.php';
+require_once 'includes/sql.php';
+require_once 'includes/auth.php';
+require_once 'includes/utils.php';
+require_once 'includes/db_connect.php';
 
 auth_redirect();
 
@@ -37,7 +37,6 @@ $stmt = query_execute($db, $get_exchanges_sql, [':current_user' => current_user(
 if ($res = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
   $has_offers = true;
   foreach ($res as $row) {
-    // $group = $row['owner_username'] === current_user() ? 'owned' : 'others';
     $message_group[] = $row;
   }
 } else {
@@ -50,11 +49,11 @@ if ($res = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
 <html lang="en">
 
 <head>
-  <?php require('templates/head.php') ?>
+  <?php require 'templates/head.php'; ?>
 </head>
 
 <body>
-  <?php require('templates/navbar.php') ?>
+  <?php require 'templates/navbar.php'; ?>
   <main class="container">
     <h1 class="my-3">Messages</h1>
     <?php if ($has_offers) :; ?>

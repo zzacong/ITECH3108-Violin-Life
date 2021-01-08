@@ -7,7 +7,6 @@ require_once('includes/utils.php');
 
 <nav class="navbar navbar-expand-md navbar-light bg-light">
   <div class="container-fluid">
-    <!-- <div class="d-flex ps-4"> -->
     <a href="index.php" class="navbar-brand">Violin Life</a>
     <?php if (authenticated()) :; ?>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
